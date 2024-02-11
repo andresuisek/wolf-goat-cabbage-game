@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+.DS_Store
+
+#jetbrains ide
+.idea/
+
+# virtual enviroment
+.venv
+venv/
+ENV/
+env/
+
+# db.sqlite3
+
+.env
+
+media/
+node_modules/
+/static/bundles/
+
+# local debugging
+.vscode/
+*.orig
+
+
+staticcollected/
