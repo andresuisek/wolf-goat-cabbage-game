@@ -29,7 +29,7 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "app-humidity-temperature.onrender.com",
+    "api-wolf-goat-cabbage-game.onrender.com",
 ]
 
 
