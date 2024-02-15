@@ -1,8 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Tabs, Tour, Modal, Button, Form, Input, Spin } from 'antd';
-import { StopOutlined } from '@ant-design/icons';
+import { Tabs, Tour, Modal, Button, Form, Input, Spin, Tooltip } from 'antd';
+import { StopOutlined, SoundOutlined } from '@ant-design/icons';
 import Game from './components/Game';
 import { useRegisterUserMutation } from './baseApi';
+import Step1 from './components/Step1';
+import Step2 from './components/Step2';
 
 const { confirm } = Modal;
 
@@ -10,26 +12,35 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [activeTour, setActiveTour] = useState(false);
+  const [volumeUp, setVolumeUp] = useState(true);
   // const ref = useRef(null);
   const [open, setOpen] = useState(true);
   
   const [activeTab, setActiveTab] = useState(1);
 
+  const audioRef = React.createRef(null);
+  
+
+
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
     const onChange = (key) => {
-      setActiveTab(key);
+      // setActiveTab(key);
+      // userData.level = key
+      // localStorage.setItem('userData', JSON.stringify(userData));
       localStorage.setItem('currentLevel', JSON.stringify(key));
+      window.location.reload();
     };
 
     useEffect(() => {
       const cachedUserData = localStorage.getItem('userData');
+      // const currentLevel = localStorage.getItem('currentLevel');
 
       if (cachedUserData) {
           const user = JSON.parse(cachedUserData);
           setUserData(user);
-          setActiveTab(user.level);
-          localStorage.setItem('currentLevel', JSON.stringify(user.level));
+          const currentLevel =  localStorage.getItem('currentLevel');
+          setActiveTab(parseInt(currentLevel));
       } else {
         setModalOpen(true);
           // const newUser = { id: 1, name: 'John Doe', email: 'john@example.com' };
@@ -37,6 +48,8 @@ const App = () => {
           // localStorage.setItem('userData', JSON.stringify(newUser));
           // setUserData(newUser);
       }
+      audioRef.current.play();
+
     }, []);
 
     const items = [
@@ -51,35 +64,35 @@ const App = () => {
           label: 'Level 2',
           key: 2,
           children: activeTab === 2 && <Game level={2} />,
-          disabled: false,
-          icon: <StopOutlined />,
+          disabled: userData?.level >= 2 ? false : true,
+          icon: userData?.level < 2 && <StopOutlined />,
           activeKey: activeTab === 2 ? true : false
         },
         {
           label: 'Level 3',
           key: 3,
           children: activeTab === 3 && <Game level={3} />,
-          disabled: false,
-          icon: <StopOutlined />
+          disabled: userData?.level >= 3 ? false : true,
+          icon: userData?.level < 3 && <StopOutlined />
         },
     ]
 
 
     const steps = [
       {
-        title: '!Bienvenido!',
-        description: 'Tu objetivo consiste en trasladar los animales al otro lado del rio!',
+        title: '!Game rules!',
+        description: <Step1 />,
         target: null,
       },
       {
-        title: 'Movilidad',
-        description: 'Utilizas las teclas para mover al granjero.',
+        title: '¡Controls!',
+        description: <Step2 />,
         // placement: 'right',
         target: () => null,
       },
       {
-        title: 'Agarra los animales',
-        description: 'Los animales los puedes agarra con la tecla espacio.',
+        title: 'Are you ready to start?',
+        // description: 'Los animales los puedes agarra con la tecla espacio.',
         // placement: 'top',
         target: () => null,
       },
@@ -96,6 +109,7 @@ const App = () => {
         let newUserData = { ...user };
         newUserData.level = 1
         localStorage.setItem('userData', JSON.stringify(newUserData));
+        localStorage.setItem('currentLevel', JSON.stringify(newUserData.level));
 
         setModalOpen(false);
         setActiveTour(true);
@@ -108,25 +122,52 @@ const App = () => {
 
     const onFinishFailed = (errorInfo) => {
       console.log('Failed:', errorInfo);
-    };    
+    };  
+    
+    const togglePlay = (value) => {
+      if (value) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+
+      setVolumeUp(value);
+    };
 
     return (
       <>
         <h2 className="title">Río de Decisiones</h2>
 
-        <Tabs
+        {!modalOpen && <Tabs
             activeKey={activeTab}
             className='tabs-game'
             onChange={onChange}
             type="card"
             items={items}
-        />
+            tabBarExtraContent={
+              <> 
+                <Tooltip title="Tour">
+                  <Button type="primary" shape="circle" onClick={() => setActiveTour(true)}
+                    icon={<span class="material-symbols-outlined">info</span>} />
+                </Tooltip>
+                {volumeUp && <Tooltip title="Volume Off">
+                  <Button type="primary" shape="circle" onClick={() => togglePlay(false)}
+                    icon={<span class="material-symbols-outlined">volume_off</span>} />
+                </Tooltip>}
+                {!volumeUp && <Tooltip title="Volume Up">
+                  <Button type="primary" shape="circle" onClick={() => togglePlay(true)}
+                    icon={<span class="material-symbols-outlined">volume_up</span>} />
+                </Tooltip>}
+              </>
+            }
+        />}
 
-        {activeTour && <Tour open={open} onClose={() => setOpen(false)} steps={steps} />}
+        {activeTour && <Tour open={activeTour} onClose={() => setActiveTour(false)} steps={steps} />}
 
         <Spin spinning={isLoading}>
           <Modal
-            title="Register"
+            className="background-modal"
+            // title="Register"
             centered
             open={modalOpen}
             closeIcon={false}
@@ -174,6 +215,8 @@ const App = () => {
             </Form>
           </Modal>
         </Spin>
+        
+        <audio ref={audioRef} src="./sounds/music.wav" type="audio/wav" autoPlay />
       </>
     );
 };

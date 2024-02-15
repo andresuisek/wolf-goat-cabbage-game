@@ -113,6 +113,9 @@ export class Play extends Phaser.Scene {
 
         // Obstacles
         this.physics.add.collider(this.player, this.obstacles, this.hitObstacles, null, this);
+
+        this.physics.add.collider(this.bombs, this.platforms);
+        this.physics.add.collider(this.player, this.bombs, this.hitObstacles, null, this);
     }
 
     update() {        
@@ -170,6 +173,7 @@ export class Play extends Phaser.Scene {
     }
 
     createObstacles() {
+        this.bombs = this.physics.add.group();
         this.obstacles = this.physics.add.staticGroup();
         
         const currentLevel = localStorage.getItem('currentLevel');
@@ -179,14 +183,48 @@ export class Play extends Phaser.Scene {
             this.tree1 = this.obstacles.create(370, 70, 'rock3')
             // this.rock1 = this.obstacles.create(370, 70, 'rock1')
             this.tree1 = this.obstacles.create(500, 230, 'tree2')
+
+            // const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+            const bomb = this.bombs.create(600, 400, 'rock4');
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(0, 300), 0);
         }
         else if(level === 2){
-            this.tree1 = this.obstacles.create(370, 70, 'rock3')
+            this.tree1 = this.obstacles.create(370, 60, 'rock1')
+            this.tree1 = this.obstacles.create(370, 260, 'rock2')
+            this.tree1 = this.obstacles.create(670, 260, 'rock2')
             // this.rock1 = this.obstacles.create(370, 70, 'rock1')
-            this.tree1 = this.obstacles.create(500, 230, 'tree2')
+            this.tree1 = this.obstacles.create(500, 240, 'tree2')
+
+            const bomb = this.bombs.create(600, 420, 'rock4');
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(200, 0);
+
+            const bomb2 = this.bombs.create(600, 400, 'rock4');
+            bomb2.setBounce(1);
+            bomb2.setCollideWorldBounds(true);
+            bomb2.setVelocity(0, 200);
         }
-        // this.rock1.setBounce(0.2);
-        // this.rock1.setCollideWorldBounds(true);
+        else if(level === 3){
+            this.tree1 = this.obstacles.create(370, 60, 'rock1')
+            this.tree1 = this.obstacles.create(370, 260, 'rock2')
+            this.tree1 = this.obstacles.create(670, 260, 'rock2')
+            // this.rock1 = this.obstacles.create(370, 70, 'rock1')
+            this.tree1 = this.obstacles.create(500, 240, 'tree2')
+
+            const bomb = this.bombs.create(600, 420, 'rock4');
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(300, 0);
+
+            const bomb2 = this.bombs.create(600, 400, 'rock4');
+            bomb2.setBounce(1);
+            bomb2.setCollideWorldBounds(true);
+            bomb2.setVelocity(0, 300);
+        }
     }
 
     createPlayer() {
@@ -324,9 +362,10 @@ export class Play extends Phaser.Scene {
 
         if(wolfOnPlatform && goatOnPlatform && cabbageOnPlatform){
             // this.finishGame = true
-            store.dispatch(setInitGame(false))
-            store.dispatch(setWinGame(true))
-            this.scene.start('gamewin')
+            // store.dispatch(setInitGame(false))
+            // store.dispatch(setWinGame(true))
+            // this.scene.start('gamewin')
+            this.winGame()
         }
     }
 
@@ -337,36 +376,40 @@ export class Play extends Phaser.Scene {
 
         // console.log(this.leftCabaggePlatForm, cabaggeOnPlatform)
         if(this.leftWolfPlatForm && this.leftGoatPlatForm && !this.leftCabaggePlatForm && !playerOnPlatform){
-            // this.finishGame = true;
-            store.dispatch(setInitGame(false))
-            store.dispatch(setWinGame(false))            
-            this.scene.start('gameover')
+            this.hitObstacles()
         }else if(!this.leftWolfPlatForm && this.leftGoatPlatForm && this.leftCabaggePlatForm && !playerOnPlatform){
-            // this.finishGame = true;
-            store.dispatch(setInitGame(false))            
-            store.dispatch(setWinGame(false))
-            this.scene.start('gameover')
+            this.hitObstacles()
         }
 
         const rigthplayerOnPlatform = this.physics.overlap(this.player, this.platform_right);
 
 
         if(this.rigthWolfPlatForm && this.rigthGoatPlatForm && !this.rigthCabaggePlatForm && !rigthplayerOnPlatform){
-            store.dispatch(setInitGame(false))            
-            store.dispatch(setWinGame(false))
-            this.scene.start('gameover')
+            this.hitObstacles()
         }else if(!this.rigthWolfPlatForm && this.rigthGoatPlatForm && this.rigthCabaggePlatForm && !rigthplayerOnPlatform){
-            store.dispatch(setInitGame(false))            
-            store.dispatch(setWinGame(false))
-            this.scene.start('gameover')
+            this.hitObstacles()
         }        
     }
 
     hitObstacles(){        
         this.physics.pause()
         this.player.setTint(0xff0000);
-        store.dispatch(setInitGame(false))            
-        store.dispatch(setWinGame(false))
-        this.scene.start('gameover')
+
+        setTimeout(() => {
+            store.dispatch(setInitGame(false));
+            store.dispatch(setWinGame(false));
+            // Iniciar la escena 'gameover'
+            // this.scene.start('gameover');
+        }, 1000);
     }
+
+    winGame(){        
+        this.physics.pause()
+
+        setTimeout(() => {
+            store.dispatch(setInitGame(false))
+            store.dispatch(setWinGame(true))
+        }, 1000);
+    }
+    
 }

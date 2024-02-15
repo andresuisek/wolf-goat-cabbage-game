@@ -10,6 +10,8 @@ import { Button, Modal, Result, Rate, Form } from 'antd';
 import { SmileOutlined, FrownOutlined } from '@ant-design/icons';
 import { useCreateRatingMutation, useCreateGameHistoryMutation } from '../baseApi';
 
+// import GameOverIcon from '../images/game-over.png';
+
 // import './PhaserGame';
 
 const Game = ({ level }) => {
@@ -141,6 +143,7 @@ const Game = ({ level }) => {
         <>
             <div id={`phaser-container-${level}`} className='Game'></div>
             <Modal
+                className='modal-background'
                 // title="Register"
                 centered
                 open={winModal}
@@ -148,8 +151,9 @@ const Game = ({ level }) => {
                 footer={[]}
             >
                 <Result
+                    className='game-win'
                     icon={<SmileOutlined />}
-                    title="You Win!"
+                    title="¡You Win!"
                     subTitle={
                         <Form
                             name="basic"
@@ -181,14 +185,18 @@ const Game = ({ level }) => {
             </Modal>
 
             <Modal
+                className='modal-background'
                 centered
                 open={loseModal}
                 closeIcon={false}
                 footer={[]}
             >
                 <Result
+                    className='game-over'
+                    // icon={null}
                     icon={<FrownOutlined />}
-                    title="Game Over!"
+                    title="¡Game Over!"
+                    // title={<img src={GameOverIcon} alt='game_over'></img>}
                     subTitle={
                         <Form
                             name="basic"

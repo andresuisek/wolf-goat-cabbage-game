@@ -40,11 +40,48 @@ body{
   padding: 10em 30em;
 }
 
+.tabs-game .ant-tabs-tab{
+  font-size: 20px;
+  font-family: cursive;
+  background: #21572f94 !important;
+  color: #ffffff;
+  /* color: #c7c7c7; */
+}
+
 .tabs-game .ant-tabs-content-holder{
   text-align: center;
 }
 
+.tabs-game div.ant-tabs-tab-active {
+  background: #21572f !important;
+}
+
+.tabs-game .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  font-size: 20px;
+  font-family: cursive;
+  color: #ffffff;
+}
+
+.tabs-game .ant-tabs-tab-disabled {
+  font-size: 20px;
+  font-family: cursive;
+  background: #838383c7 !important;
+  color: #c7c7c7 !important;
+}
+
+.tabs-game .ant-btn {
+  background: #21572f !important;
+  width: 45px;
+  height: 45px;
+  margin: 5px;
+}
+
+.tabs-game .material-symbols-outlined {
+  font-size: 35px;
+}
+
 h2.title{
+  font-family: cursive;
   text-align: center;
   width: 100%;
   margin: 0px auto;
@@ -60,6 +97,81 @@ h2.title{
     3px 3px 0px var(--background),
     6px 6px 0px #00000055;
 }
+
+.background-modal .ant-modal-content {
+  background-color: #ffffff99;
+  /* background-image: url('../images/sky.png'); */
+}
+
+/* background-color: #ffffffdb; */
+
+.background-modal .ant-btn {
+  background: var(--background-tab);
+}
+
+.game-over .ant-result-icon svg{
+  color: red;
+}
+
+.game-over .ant-result-subtitle {
+  margin-top: 30px;
+}
+
+.game-over .ant-btn{
+  background: var(--background-tab);
+  font-size: 20px;
+  font-family: cursive;
+  height: 40px;
+}
+
+.game-win .ant-result-icon svg{
+  color: yellow;
+}
+
+.game-win .ant-result-subtitle {
+  margin-top: 30px;
+}
+
+.game-win .ant-btn{
+  background: var(--background-tab);
+  font-size: 20px;
+  font-family: cursive;
+  height: 40px;
+}
+
+.ant-tour {
+  width: auto !important;
+}
+
+.ant-tour .ant-btn{
+  background: var(--background-tab);
+  font-size: 15px;
+  font-family: cursive;
+  height: 30px;
+}
+
+.ant-tour .ant-tour-title{
+  font-family: cursive;
+  text-align: center;
+  font-size: 30px !important;
+  /* width: 100%; */
+  /* 
+  margin: 0px auto;
+  letter-spacing: 5px;
+  top: 10%;
+  position: absolute;
+  margin-top: -40px;
+  transition: 4s;
+  color: var(--color);
+  
+  text-shadow: -1px -1px 0px var(--background),
+    3px 3px 0px var(--background),
+    6px 6px 0px #00000055; */
+}
+
+/* .modal-background {
+  background-color: #ffffffcc !important;
+} */
 
 /* .tabs-game .ant-tabs-tab-active{
   background: var(--background-tab);

@@ -28,6 +28,9 @@ export class MainMenu extends Phaser.Scene
         this.load.image('rock3', 'images/rock3.png');
         this.load.image('tree1', 'images/tree1.png');
         this.load.image('tree2', 'images/tree2.png');
+        this.load.image('tree2_vertical', 'images/tree2_vertical.png');
+
+        this.load.image('rock4', 'images/rock4.png');
     }
 
     create ()
@@ -44,7 +47,7 @@ export class MainMenu extends Phaser.Scene
         
         btnStart.setInteractive();
         
-        btnStart.once('pointerup', function ()
+        btnStart.once('pointerdown', function ()
         {
             store.dispatch(setInitGame(true))    
             this.scene.start('game');
