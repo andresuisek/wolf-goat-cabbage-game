@@ -17,7 +17,7 @@ export class MainMenu extends Phaser.Scene
         this.load.image('wolf', 'images/wolf.png');
         this.load.image('goat', 'images/goat.png');
         this.load.image('cabbage', 'images/cabbage.png');
-        this.load.spritesheet('farmer', 'images/farmer.png', { frameWidth: 134, frameHeight: 100 });
+        this.load.spritesheet('farmer', 'images/farmer.png', { frameWidth: 133, frameHeight: 90 });
 
         this.load.image('btn-start', 'images/btn-start.png');
         this.load.image('game-over', 'images/game-over.png');

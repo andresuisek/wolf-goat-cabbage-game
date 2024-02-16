@@ -214,6 +214,10 @@ export class Play extends Phaser.Scene {
             this.tree1 = this.obstacles.create(670, 260, 'rock2')
             // this.rock1 = this.obstacles.create(370, 70, 'rock1')
             this.tree1 = this.obstacles.create(500, 240, 'tree2')
+            this.tree1 = this.obstacles.create(800, 450, 'rock2')
+            this.tree1 = this.obstacles.create(170, 450, 'rock2')
+            this.tree1 = this.obstacles.create(170, 20, 'rock2')
+            this.tree1 = this.obstacles.create(800, 20, 'rock2')
 
             const bomb = this.bombs.create(600, 420, 'rock4');
             bomb.setBounce(1);
@@ -224,6 +228,11 @@ export class Play extends Phaser.Scene {
             bomb2.setBounce(1);
             bomb2.setCollideWorldBounds(true);
             bomb2.setVelocity(0, 300);
+
+            const bomb3 = this.bombs.create(600, 250, 'rock4');
+            bomb3.setBounce(1);
+            bomb3.setCollideWorldBounds(true);
+            bomb3.setVelocity(Phaser.Math.Between(-200, 400), 100);
         }
     }
 

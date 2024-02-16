@@ -9,13 +9,19 @@ body{
   margin: 0;
 
   background-image: url('../images/background.png');
-  background-size: contain;
+  background-size: auto;
   background-position: center;
   background-repeat: repeat;
   margin: 0;
   overflow: hidden;
   animation: moveBackground 10s linear infinite; 
 }
+
+/* @media only screen and (max-width: 1500px) {
+  body {
+    background-size: auto;
+  }
+} */
 
 #root .ant-layout, #root header {
   background: transparent;
@@ -36,8 +42,14 @@ body{
   --background-tab: #21572f;
 }
 
+main.ant-layout-content {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .tabs-game {
-  padding: 10em 30em;
+  margin-top: 130px;
+  /* padding: 10em 30em; */
 }
 
 .tabs-game .ant-tabs-tab{
@@ -83,7 +95,7 @@ body{
 h2.title{
   font-family: cursive;
   text-align: center;
-  width: 100%;
+  /* width: 100%; */
   margin: 0px auto;
   font-size: 80px;
   letter-spacing: 5px;

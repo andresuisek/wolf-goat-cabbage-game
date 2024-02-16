@@ -12,7 +12,7 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [activeTour, setActiveTour] = useState(false);
-  const [volumeUp, setVolumeUp] = useState(true);
+  const [volumeUp, setVolumeUp] = useState(false);
   // const ref = useRef(null);
   const [open, setOpen] = useState(true);
   
@@ -48,7 +48,7 @@ const App = () => {
           // localStorage.setItem('userData', JSON.stringify(newUser));
           // setUserData(newUser);
       }
-      audioRef.current.play();
+      // audioRef.current.play();
 
     }, []);
 
@@ -90,12 +90,12 @@ const App = () => {
         // placement: 'right',
         target: () => null,
       },
-      {
-        title: 'Are you ready to start?',
-        // description: 'Los animales los puedes agarra con la tecla espacio.',
-        // placement: 'top',
-        target: () => null,
-      },
+      // {
+      //   title: 'Are you ready to start?',
+      //   // description: 'Los animales los puedes agarra con la tecla espacio.',
+      //   // placement: 'top',
+      //   target: () => null,
+      // },
     ];
 
     const onFinish = async (values) => {
@@ -125,18 +125,20 @@ const App = () => {
     };  
     
     const togglePlay = (value) => {
-      if (value) {
+      setVolumeUp(value);
+    };
+
+    useEffect(() => {
+      if (volumeUp) {
         audioRef.current.play();
       } else {
         audioRef.current.pause();
       }
-
-      setVolumeUp(value);
-    };
+    }, [volumeUp])
 
     return (
       <>
-        <h2 className="title">Río de Decisiones</h2>
+        <h2 className="title">The Great River Riddle</h2>
 
         {!modalOpen && <Tabs
             activeKey={activeTab}
@@ -148,15 +150,15 @@ const App = () => {
               <> 
                 <Tooltip title="Tour">
                   <Button type="primary" shape="circle" onClick={() => setActiveTour(true)}
-                    icon={<span class="material-symbols-outlined">info</span>} />
+                    icon={<span className="material-symbols-outlined">info</span>} />
                 </Tooltip>
                 {volumeUp && <Tooltip title="Volume Off">
                   <Button type="primary" shape="circle" onClick={() => togglePlay(false)}
-                    icon={<span class="material-symbols-outlined">volume_off</span>} />
+                    icon={<span className="material-symbols-outlined">volume_off</span>} />
                 </Tooltip>}
                 {!volumeUp && <Tooltip title="Volume Up">
                   <Button type="primary" shape="circle" onClick={() => togglePlay(true)}
-                    icon={<span class="material-symbols-outlined">volume_up</span>} />
+                    icon={<span className="material-symbols-outlined">volume_up</span>} />
                 </Tooltip>}
               </>
             }
@@ -164,7 +166,7 @@ const App = () => {
 
         {activeTour && <Tour open={activeTour} onClose={() => setActiveTour(false)} steps={steps} />}
 
-        <Spin spinning={isLoading}>
+        {/* <Spin spinning={true}> */}
           <Modal
             className="background-modal"
             // title="Register"
@@ -208,13 +210,13 @@ const App = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={isLoading}>
                   Submit
                 </Button>
               </Form.Item>
             </Form>
           </Modal>
-        </Spin>
+        {/* </Spin> */}
         
         <audio ref={audioRef} src="./sounds/music.wav" type="audio/wav" autoPlay />
       </>
