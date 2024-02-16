@@ -45,6 +45,8 @@ body{
 main.ant-layout-content {
   margin-right: auto;
   margin-left: auto;
+  justify-content: center;
+  display: flex;
 }
 
 .tabs-game {
