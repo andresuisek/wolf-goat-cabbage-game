@@ -385,8 +385,12 @@ export class Play extends Phaser.Scene {
 
         // console.log(this.leftCabaggePlatForm, cabaggeOnPlatform)
         if(this.leftWolfPlatForm && this.leftGoatPlatForm && !this.leftCabaggePlatForm && !playerOnPlatform){
+            this.wolf.setTint(0xff0000);
+            this.goat.setTint(0xff0000);
             this.hitObstacles()
         }else if(!this.leftWolfPlatForm && this.leftGoatPlatForm && this.leftCabaggePlatForm && !playerOnPlatform){
+            this.goat.setTint(0xff0000);
+            this.cabbage.setTint(0xff0000);
             this.hitObstacles()
         }
 
@@ -394,8 +398,12 @@ export class Play extends Phaser.Scene {
 
 
         if(this.rigthWolfPlatForm && this.rigthGoatPlatForm && !this.rigthCabaggePlatForm && !rigthplayerOnPlatform){
+            this.wolf.setTint(0xff0000);
+            this.goat.setTint(0xff0000);
             this.hitObstacles()
         }else if(!this.rigthWolfPlatForm && this.rigthGoatPlatForm && this.rigthCabaggePlatForm && !rigthplayerOnPlatform){
+            this.goat.setTint(0xff0000);
+            this.cabbage.setTint(0xff0000);
             this.hitObstacles()
         }        
     }

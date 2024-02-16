@@ -63,12 +63,12 @@ const Game = ({ level }) => {
             let intervalId;
     
             if (initGame) {
-                console.log('Juego Iniciado');
+                // console.log('Juego Iniciado');
                 intervalId = setInterval(() => {
                     setTimer((prevTimer) => prevTimer + 1);
                 }, 1000); // Aumentar el temporizador cada segundo (1000 milisegundos)
             }else{
-                console.log('Juego Finalizado');
+                // console.log('Juego Finalizado');
                 return () => clearInterval(intervalId);    
             }
     
@@ -105,7 +105,7 @@ const Game = ({ level }) => {
             setGameHistory(timer, winGame)
 
             // createGameHistory
-            console.log('Juego terminado', timer)
+            // console.log('Juego terminado', timer)
         }
     }, [winGame, timer])
 
@@ -121,7 +121,7 @@ const Game = ({ level }) => {
             }).unwrap();
             
             if(winGame){
-                user.level = user.level < 3 && user.level + 1;
+                user.level = user.level < 3 ? user.level + 1 : 3;
                 localStorage.setItem('userData', JSON.stringify(user));
                 localStorage.setItem('currentLevel', JSON.stringify(user.level));
                 window.location.reload();
@@ -167,7 +167,7 @@ const Game = ({ level }) => {
                                 rules={[
                                     {
                                     required: true,
-                                    message: 'Please pick an rate!',
+                                    message: 'Please pick a rate!',
                                     },
                                 ]}
                             >
@@ -210,7 +210,7 @@ const Game = ({ level }) => {
                                 rules={[
                                     {
                                     required: true,
-                                    message: 'Please pick an rate!',
+                                    message: 'Please pick a rate!',
                                     },
                                 ]}
                             >

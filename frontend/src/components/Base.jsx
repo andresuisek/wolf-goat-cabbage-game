@@ -31,7 +31,7 @@ const Base = ({ children }) => {
                 style={{
                 display: 'flex',
                 alignItems: 'center',
-                "justify-content": "space-between"
+                justifyContent: "space-between"
                 }}
             >
                 <div className="demo-logo" style={{marginRight: '30px', marginTop: '20px', width: '150px'}}>

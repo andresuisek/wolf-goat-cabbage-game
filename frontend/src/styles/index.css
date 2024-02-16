@@ -13,7 +13,7 @@ body{
   background-position: center;
   background-repeat: repeat;
   margin: 0;
-  overflow: hidden;
+  overflow: auto;
   animation: moveBackground 10s linear infinite; 
 }
 
@@ -50,7 +50,7 @@ main.ant-layout-content {
 }
 
 .tabs-game {
-  margin-top: 130px;
+  margin-top: 120px;
   /* padding: 10em 30em; */
 }
 
